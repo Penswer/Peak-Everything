@@ -14,8 +14,7 @@ internal class ConstantFields
             {
                 if (field.Name.ToLower().Contains("infinitestam"))
                 {
-                    Plugin.Logger.LogError("FOUD  THING");
-
+                    // Plugin.Logger.LogError("FOUD  THING");
                     infiniteStamina = field;
                     break;
                 }
@@ -35,8 +34,7 @@ internal class ConstantFields
                 Plugin.Logger.LogError(field.Name);
                 if (field.Name.ToLower().Contains("falldamagetime"))
                 {
-                    Plugin.Logger.LogError("FOUD  THING2");
-
+                    // Plugin.Logger.LogError("FOUD  THING2");
                     fallDamageTime = field;
                     break;
                 }

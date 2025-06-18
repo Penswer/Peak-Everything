@@ -41,9 +41,9 @@ public class Plugin : BaseUnityPlugin
     private static void MyUI()
     {
         // DearImGuiInjection.DearImGuiInjection.IsCursorVisible = false;
-        DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags ^= ImGuiConfigFlags.NoMouse;
-        // DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
-        // DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
+        // DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags ^= ImGuiConfigFlags.NoMouse;
+        DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
+        DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
         // ImGui.ShowDemoWindow();
         if (ImGui.Begin("Everything Menu", ConfigValues.everythingWindowFlags))
         {
@@ -66,6 +66,11 @@ public class Plugin : BaseUnityPlugin
                     ConfigValues.everythingWindowFlags ^= ImGuiWindowFlags.NoMove;
                 }
             }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Locks the mod menu position.");
+            }
+
 
             if (ImGui.Checkbox("Fly", ref ConfigValues.fly.value))
             {
@@ -83,12 +88,23 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
-
-            if (ImGui.SliderFloat("Fly Speed", ref ConfigValues.flySpeed.value, 5.0f, 30.0f))
+            if (ImGui.IsItemHovered())
             {
+                ImGui.SetTooltip("Lets you fly. Kinda buggy since I suck. Also isn't synced very well with other players.");
             }
 
+            if (ImGui.SliderFloat("Fly Speed", ref ConfigValues.flySpeed.value, 10.0f, 200.0f))
+            {
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Fly Speed...duh");
+            }
             ImGui.Checkbox("Const##0", ref ConfigValues.noFallDamage.constantUpdating);
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Makes this option constantly apply.");
+            }
             ImGui.SameLine();
             if (ImGui.Checkbox("No Fall Damage", ref ConfigValues.noFallDamage.value))
             {
@@ -112,8 +128,12 @@ public class Plugin : BaseUnityPlugin
             }
 
             ImGui.Checkbox("Const##1", ref ConfigValues.infiniteStamina.constantUpdating);
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Makes this option constantly apply.");
+            }
             ImGui.SameLine();
-            if (ImGui.Checkbox("Infinite Stamina", ref ConfigValues.infiniteStamina.value))
+            if (ImGui.Checkbox("Freeze Stamina", ref ConfigValues.infiniteStamina.value))
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
@@ -131,8 +151,15 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
-
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Freezes Stamina.");
+            }
             ImGui.Checkbox("Const##2", ref ConfigValues.speed.constantUpdating);
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Makes this option constantly apply.");
+            }
             ImGui.SameLine();
             if (ImGui.SliderFloat("Speed", ref ConfigValues.speed.value, 1.0f, 20.0f))
             {
@@ -144,8 +171,15 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
-
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Movement Speed Multiplier.");
+            }
             ImGui.Checkbox("Const##3", ref ConfigValues.jump.constantUpdating);
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Makes this option constantly apply.");
+            }
             ImGui.SameLine();
             if (ImGui.SliderFloat("Jump", ref ConfigValues.jump.value, 1.0f, 500.0f))
             {
@@ -157,7 +191,10 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
-
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Jump Multiplier.");
+            }
             if (ImGui.Button("Refresh Inventory Items"))
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
@@ -187,7 +224,10 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
-
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Refreshes the list of spawnable items.");
+            }
 
             if (ImGui.RadioButton("Slot 1", inventorySlotNum == 0))
             {
@@ -203,8 +243,12 @@ public class Plugin : BaseUnityPlugin
             {
                 inventorySlotNum = 2;
             }
-            if (ImGui.BeginCombo("##InventorySelect", itemsSelected == -1 ? "None" : itemNames[itemsSelected]))
+            if (ImGui.BeginCombo("Items##InventorySelect", itemsSelected == -1 ? "None" : itemNames[itemsSelected]))
             {
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip("Clicking on an item will place it in the selected inventory slot. Only the game-master will be able to drop the items. But non-master peers can still spawn and use them.");
+                }
                 ImGui.InputText("##InventorySearch", inventorySearchBuffer, (uint)inventorySearchBuffer.Length);
                 // if (ImGui.Selectable($"None##-1Item1InvEditor", itemsSelected == -1))
                 // {
@@ -287,7 +331,10 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
-
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Tries to set the recharge/ammo/filled amount of inventory items to 999");
+            }
             if (ImGui.Button("Bypass OutOfDate"))
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
@@ -295,7 +342,10 @@ public class Plugin : BaseUnityPlugin
                     GameObject.Find("/Modal(Clone)/Canvas")?.SetActive(false);
                 });
             }
-
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Lets you play the game if you get an Out of Date screen.");
+            }
             if (ImGui.Button("Refresh Player List"))
             {
                 players.Clear();
@@ -306,6 +356,10 @@ public class Plugin : BaseUnityPlugin
                     players.Add(character);
                     playerNames.Add(character.name);
                 }
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Refreshes Player List.....");
             }
             if (ImGui.BeginCombo("Player Select", playerSelected == -1 ? "None" : playerNames[playerSelected]))
             {
@@ -333,6 +387,10 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Revives Selected Player Above You.");
+            }
             ImGui.SameLine();
             if (ImGui.Button("Warp To"))
             {
@@ -344,6 +402,10 @@ public class Plugin : BaseUnityPlugin
                     }
                 });
             }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Warps you to the selected player");
+            }
             ImGui.SameLine();
             if (ImGui.Button("Warp To Me"))
             {
@@ -354,6 +416,10 @@ public class Plugin : BaseUnityPlugin
                         players[playerSelected].photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), true });
                     }
                 });
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Warps selected player to you");
             }
             // ImGui.SameLine();
             // if (ImGui.Button(""))
