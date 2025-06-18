@@ -33,6 +33,7 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         Component = this.gameObject.AddComponent<EventComponent>();
         DearImGuiInjection.DearImGuiInjection.Render += MyUI;
+        // DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags |= ImGuiConfigFlags.ViewportsEnable;
         // DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
         // DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
         // Harmony.CreateAndPatchAll(typeof(BodyPartPatches.Gravity));
@@ -42,6 +43,11 @@ public class Plugin : BaseUnityPlugin
     {
         // DearImGuiInjection.DearImGuiInjection.IsCursorVisible = false;
         // DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags ^= ImGuiConfigFlags.NoMouse;
+        // if ((DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags & ImGuiConfigFlags.ViewportsEnable) == ImGuiConfigFlags.ViewportsEnable)
+        // {
+        //     ImGui.UpdatePlatformWindows();
+        //     ImGui.RenderPlatformWindowsDefault();
+        // }
         DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
         DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
         // ImGui.ShowDemoWindow();
@@ -245,10 +251,7 @@ public class Plugin : BaseUnityPlugin
             }
             if (ImGui.BeginCombo("Items##InventorySelect", itemsSelected == -1 ? "None" : itemNames[itemsSelected]))
             {
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.SetTooltip("Clicking on an item will place it in the selected inventory slot. Only the game-master will be able to drop the items. But non-master peers can still spawn and use them.");
-                }
+
                 ImGui.InputText("##InventorySearch", inventorySearchBuffer, (uint)inventorySearchBuffer.Length);
                 // if (ImGui.Selectable($"None##-1Item1InvEditor", itemsSelected == -1))
                 // {
@@ -279,6 +282,10 @@ public class Plugin : BaseUnityPlugin
                     }
                 }
                 ImGui.EndCombo();
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Clicking on an item will place it in the selected inventory slot. Only the game-master will be able to drop the items. But non-master peers can still spawn and use them.");
             }
 
             if (ImGui.Button("Give Items 999 Recharge"))
