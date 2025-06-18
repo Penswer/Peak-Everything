@@ -1,6 +1,6 @@
 {
     "name": "Everything",
-    "version_number": "1.0",
+    "version_number": "1.0.0",
     "website_url": "https://github.com/Penswer/Peak-Everything",
     "description": "Simple mod menu that does a bit of this and a bit of that.",
     "dependencies": [
