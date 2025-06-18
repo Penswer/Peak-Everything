@@ -24,6 +24,10 @@ Start the game in DX12 mode (not vulkan)
 ???
 Profit
 
+## Comments
+Don't be a dinghead. \
+There is no matchmaking in this game so if you join your friend just to mess with their run you just suck. 
+
 ## Images
 ![image](https://github.com/user-attachments/assets/61a33865-1a29-4250-a27f-6ce236ecc33b)
 
