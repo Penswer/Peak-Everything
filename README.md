@@ -32,4 +32,4 @@ There is no matchmaking in this game so if you join your friend just to mess wit
 ![image](https://github.com/user-attachments/assets/61a33865-1a29-4250-a27f-6ce236ecc33b)
 
 ## Credits
-[DearImGuiInjector](https://github.com/xiaoxiao921/DearImGuiInjection)
+[DearImGuiInjection](https://github.com/xiaoxiao921/DearImGuiInjection)
