@@ -1,4 +1,3 @@
-using System;
 using ImGuiNET;
 
 internal class ConfigValue<T>

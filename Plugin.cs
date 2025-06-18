@@ -5,11 +5,8 @@ using System;
 using DearImGuiInjection.BepInEx;
 using ImGuiNET;
 using System.Collections.Generic;
-using ExitGames.Client.Photon.StructWrapping;
 using System.Text;
-using pworld.Scripts;
 using Photon.Pun;
-using UnityEngine.Rendering.Universal;
 
 namespace Everything;
 
@@ -43,8 +40,10 @@ public class Plugin : BaseUnityPlugin
 
     private static void MyUI()
     {
-        DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
-        DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
+        // DearImGuiInjection.DearImGuiInjection.IsCursorVisible = false;
+        DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags ^= ImGuiConfigFlags.NoMouse;
+        // DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
+        // DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
         // ImGui.ShowDemoWindow();
         if (ImGui.Begin("Everything Menu", ConfigValues.everythingWindowFlags))
         {

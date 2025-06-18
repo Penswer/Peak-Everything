@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net4.7.1</TargetFramework>
     <AssemblyName>Everything</AssemblyName>
-    <Product>Does a lot of things</Product>
+    <Product>Does a few things</Product>
     <Version>1.0.0</Version>
     <!--AllowUnsafeBlocks>true</AllowUnsafeBlocks-->
     <LangVersion>latest</LangVersion>

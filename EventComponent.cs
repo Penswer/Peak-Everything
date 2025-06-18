@@ -1,10 +1,5 @@
 using UnityEngine;
 using System;
-using System.Reflection;
-using ExitGames.Client.Photon.StructWrapping;
-using Everything;
-using pworld.Scripts;
-using System.Collections.Generic;
 
 public class EventComponent : MonoBehaviour
 {
