@@ -1,6 +1,4 @@
 # Peak-Everything
-
-## Description
 Simple mod menu that does a bit of this and a bit of that.
 
 ## Features
