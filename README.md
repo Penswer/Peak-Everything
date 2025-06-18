@@ -16,9 +16,16 @@ Warp Player to You
 
 ## Installation
 Download BepInEx from [this link](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.3) \
+Extract the contents into the PEAK game directory accessed through Steam>>Peak>>Manage>>Browse Local Files \
+Run the game once \
 Download and extract this package \
-Place Everything.dll and the ImGui folder into your bepinex plugins Directory \
-Start the game in DX12 mode (not vulkan) 
+Place Everything.dll and the ImGui folder into your plugins directory located in BepInEx>>Plugins inside your PEAK directory \
+Start the game in DX12 mode (not vulkan)
+???
+Profit
 
 ## Images
 ![image](https://github.com/user-attachments/assets/61a33865-1a29-4250-a27f-6ce236ecc33b)
+
+## Credits
+[DearImGuiInjector](https://github.com/xiaoxiao921/DearImGuiInjection)
