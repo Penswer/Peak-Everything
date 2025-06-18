@@ -20,8 +20,8 @@ Extract the contents into the PEAK game directory accessed through Steam>>Peak>>
 Run the game once \
 Download and extract this package \
 Place Everything.dll and the ImGui folder into your plugins directory located in BepInEx>>Plugins inside your PEAK directory \
-Start the game in DX12 mode (not vulkan)
-???
+Start the game in DX12 mode (not vulkan) \
+??? \
 Profit
 
 ## Comments
