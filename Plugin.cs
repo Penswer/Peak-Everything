@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using Photon.Pun;
 using Zorro.Core.Serizalization;
+using pworld.Scripts;
 
 namespace Everything;
 
@@ -419,7 +420,16 @@ public class Plugin : BaseUnityPlugin
                     if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
                     {
                         // players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), false });
-                        players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { players[playerSelected].Head + new Vector3(0.0f, 4.0f, 0.0f), false });
+                        Vector3 pos;
+                        if (players[playerSelected].Ghost != null)
+                        {
+                            pos = players[playerSelected].Ghost.gameObject.transform.position;
+                        }
+                        else
+                        {
+                            pos = players[playerSelected].Head;
+                        }
+                        players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { pos + new Vector3(0.0f, 4.0f, 0.0f), false });
                     }
                 });
             }
