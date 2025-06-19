@@ -323,7 +323,7 @@ public class Plugin : BaseUnityPlugin
             }
             if (ImGui.IsItemHovered())
             {
-                ImGui.SetTooltip("Clicking on an item will place it in the selected inventory slot. Only the game-master will be able to drop the items. But non-master peers can still spawn and use them.");
+                ImGui.SetTooltip("Clicking on an item will place it in the selected inventory slot.");
             }
 
             if (ImGui.Button("Give Items 999 Recharge"))
@@ -391,6 +391,7 @@ public class Plugin : BaseUnityPlugin
             {
                 ImGui.SetTooltip("Lets you play the game if you get an Out of Date screen.");
             }
+
             // if (ImGui.Button("Refresh Player List"))
             // {
             //     UnityMainThreadDispatcher.Enqueue(() =>
@@ -542,8 +543,8 @@ public class Plugin : BaseUnityPlugin
             if (ImGui.IsItemHovered())
             {
                 ImGui.SetTooltip("Warps selected player to you");
-            }
 
+            }
             ImGui.End();
         }
 

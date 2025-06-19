@@ -30,7 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/PEAK_Data/Managed/*.dll"></Reference>
-    <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/ImGui/DearImGuiInjection.dll"></Reference>
-    <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/ImGui/ImGui.NET.dll"></Reference>
+    <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/DearImGuiInjection/DearImGuiInjection.dll"></Reference>
+    <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/DearImGuiInjection/ImGui.NET.dll"></Reference>
 </ItemGroup>
 </Project>

@@ -70,7 +70,19 @@ public class EventComponent : MonoBehaviour
                     }
                 }
             }
+            // if (ConfigValues.eruptionSpawn.value)
+            // {
+            //     if (Input.GetKeyDown(KeyCode.E))
+            //     {
+            //         ConfigValues.eruptionSpawn.value = false;
+            //     }
+            //     if (Input.GetMouseButtonDown(0))
+            //     {
+                    
+            //     }
+            // }
         }
+
     }
 
     void OnGUI()
