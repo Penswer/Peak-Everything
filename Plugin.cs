@@ -226,6 +226,12 @@ public class Plugin : BaseUnityPlugin
             {
                 ImGui.SetTooltip("Jump Multiplier.");
             }
+
+            if (ImGui.Button("Tele To 0,0,0"))
+            {
+                UnityMainThreadDispatcher.Enqueue(() => { Character.localCharacter?.photonView?.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { new Vector3(0.0f, 0.0f, 0.0f), true }); });
+            }
+
             if (ImGui.Button("Refresh Inventory Items"))
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
@@ -384,14 +390,26 @@ public class Plugin : BaseUnityPlugin
             }
             if (ImGui.Button("Refresh Player List"))
             {
-                players.Clear();
-                playerNames.Clear();
-                playerSelected = -1;
-                foreach (var character in Character.AllCharacters)
+                UnityMainThreadDispatcher.Enqueue(() =>
                 {
-                    players.Add(character);
-                    playerNames.Add(character.characterName);
-                }
+                    try
+                    {
+                        players.Clear();
+                        playerNames.Clear();
+                        playerSelected = -1;
+                        foreach (var character in Character.AllCharacters)
+                        {
+                            players.Add(character);
+                            playerNames.Add(character.characterName);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ex);
+                        Logger.LogError(ex.Message);
+                        Logger.LogError(ex.StackTrace);
+                    }
+                });
             }
             if (ImGui.IsItemHovered())
             {
@@ -417,19 +435,28 @@ public class Plugin : BaseUnityPlugin
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
-                    if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                    try
                     {
-                        // players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), false });
-                        Vector3 pos;
-                        if (players[playerSelected].Ghost != null)
+                        if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
                         {
-                            pos = players[playerSelected].Ghost.gameObject.transform.position;
+                            // players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), false });
+                            Vector3 pos;
+                            if (players[playerSelected].Ghost != null)
+                            {
+                                pos = players[playerSelected].Ghost.gameObject.transform.position;
+                            }
+                            else
+                            {
+                                pos = players[playerSelected].Head;
+                            }
+                            players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { pos + new Vector3(0.0f, 4.0f, 0.0f), false });
                         }
-                        else
-                        {
-                            pos = players[playerSelected].Head;
-                        }
-                        players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { pos + new Vector3(0.0f, 4.0f, 0.0f), false });
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ex);
+                        Logger.LogError(ex.Message);
+                        Logger.LogError(ex.StackTrace);
                     }
                 });
             }
@@ -442,9 +469,18 @@ public class Plugin : BaseUnityPlugin
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
-                    if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                    try
                     {
-                        Character.localCharacter.photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { players[playerSelected].Head + new Vector3(0.0f, 4.0f, 0.0f), true });
+                        if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                        {
+                            Character.localCharacter.photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { players[playerSelected].Head + new Vector3(0.0f, 4.0f, 0.0f), true });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ex);
+                        Logger.LogError(ex.Message);
+                        Logger.LogError(ex.StackTrace);
                     }
                 });
             }
@@ -457,9 +493,18 @@ public class Plugin : BaseUnityPlugin
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
-                    if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                    try
                     {
-                        players[playerSelected].photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), true });
+                        if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                        {
+                            players[playerSelected].photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), true });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ex);
+                        Logger.LogError(ex.Message);
+                        Logger.LogError(ex.StackTrace);
                     }
                 });
             }
