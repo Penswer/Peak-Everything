@@ -27,6 +27,10 @@ public class EventComponent : MonoBehaviour
             {
                 ConstantFields.GetInfiniteStaminaField().SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.infiniteStamina.value);
             }
+            if (ConfigValues.statusLock.constantUpdating && ConstantFields.GetStatusLockField() != null)
+            {
+                ConstantFields.GetStatusLockField().SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.statusLock.value);
+            }
             if (ConfigValues.fly.value && GameHelpers.GetRagdollComponent() && GameHelpers.GetMovementComponent())
             {
                 // Plugin.Logger.LogError("HERE1");

@@ -21,5 +21,6 @@ internal class ConfigValues
     public static ConfigValue<bool> fly = new ConfigValue<bool>(false);
     public static ConfigValue<bool> noFallDamage = new ConfigValue<bool>(false);
     public static ConfigValue<bool> infiniteStamina = new ConfigValue<bool>(false);
+    public static ConfigValue<bool> statusLock = new ConfigValue<bool>(false);
     public static ImGuiWindowFlags everythingWindowFlags = ImGuiWindowFlags.None;
 }

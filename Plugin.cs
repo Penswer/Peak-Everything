@@ -7,6 +7,7 @@ using ImGuiNET;
 using System.Collections.Generic;
 using System.Text;
 using Photon.Pun;
+using Zorro.Core.Serizalization;
 
 namespace Everything;
 
@@ -106,6 +107,7 @@ public class Plugin : BaseUnityPlugin
             {
                 ImGui.SetTooltip("Fly Speed...duh");
             }
+
             ImGui.Checkbox("Const##0", ref ConfigValues.noFallDamage.constantUpdating);
             if (ImGui.IsItemHovered())
             {
@@ -131,6 +133,28 @@ public class Plugin : BaseUnityPlugin
                         }
                     }
                 });
+            }
+
+            ImGui.Checkbox("Const##-1", ref ConfigValues.statusLock.constantUpdating);
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Makes this option constantly apply.");
+            }
+
+            ImGui.SameLine();
+            if (ImGui.Checkbox("Status Lock", ref ConfigValues.statusLock.value))
+            {
+                UnityMainThreadDispatcher.Enqueue(() =>
+                {
+                    if (GameHelpers.GetCharacterComponent())
+                    {
+                        ConstantFields.GetStatusLockField()?.SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.statusLock.value);
+                    }
+                });
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Stops statuses from changing. (poison/sleep/etc)");
             }
 
             ImGui.Checkbox("Const##1", ref ConfigValues.infiniteStamina.constantUpdating);
@@ -272,6 +296,10 @@ public class Plugin : BaseUnityPlugin
                                 if (Player.localPlayer != null && Player.localPlayer.itemSlots != null && Player.localPlayer.itemSlots.Length >= 3)
                                 {
                                     Player.localPlayer.itemSlots[inventorySlotNum].prefab = items[itemsSelected];
+                                    Player.localPlayer.itemSlots[inventorySlotNum].data = new ItemInstanceData(Guid.NewGuid());
+                                    ItemInstanceDataHandler.AddInstanceData(Player.localPlayer.itemSlots[inventorySlotNum].data);
+                                    byte[] array = IBinarySerializable.ToManagedArray<InventorySyncData>(new InventorySyncData(Player.localPlayer.itemSlots, Player.localPlayer.backpackSlot, Player.localPlayer.tempFullSlot));
+                                    Player.localPlayer.photonView.RPC("SyncInventoryRPC", RpcTarget.Others, new object[] { array, true });
                                 }
                             });
                         }
@@ -361,7 +389,7 @@ public class Plugin : BaseUnityPlugin
                 foreach (var character in Character.AllCharacters)
                 {
                     players.Add(character);
-                    playerNames.Add(character.name);
+                    playerNames.Add(character.characterName);
                 }
             }
             if (ImGui.IsItemHovered())
@@ -388,9 +416,10 @@ public class Plugin : BaseUnityPlugin
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
-                    if (playerSelected >= 0 && players[playerSelected] != null)
+                    if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
                     {
-                        players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), false });
+                        // players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), false });
+                        players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { players[playerSelected].Head + new Vector3(0.0f, 4.0f, 0.0f), false });
                     }
                 });
             }
@@ -403,7 +432,7 @@ public class Plugin : BaseUnityPlugin
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
-                    if (playerSelected >= 0 && players[playerSelected] != null)
+                    if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
                     {
                         Character.localCharacter.photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { players[playerSelected].Head + new Vector3(0.0f, 4.0f, 0.0f), true });
                     }
@@ -418,7 +447,7 @@ public class Plugin : BaseUnityPlugin
             {
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
-                    if (playerSelected >= 0 && players[playerSelected] != null)
+                    if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
                     {
                         players[playerSelected].photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), true });
                     }
@@ -428,8 +457,6 @@ public class Plugin : BaseUnityPlugin
             {
                 ImGui.SetTooltip("Warps selected player to you");
             }
-            // ImGui.SameLine();
-            // if (ImGui.Button(""))
 
             ImGui.End();
         }

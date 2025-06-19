@@ -23,6 +23,25 @@ internal class ConstantFields
         return infiniteStamina;
     }
 
+    private static PropertyInfo statusLock = null;
+    public static PropertyInfo GetStatusLockField()
+    {
+        if (statusLock == null)
+        {
+            var fields = typeof(Character).GetProperties();
+            foreach (var field in fields)
+            {
+                if (field.Name.ToLower().Contains("statuseslocked"))
+                {
+                    // Plugin.Logger.LogError("FOUD  THING");
+                    statusLock = field;
+                    break;
+                }
+            }
+        }
+        return statusLock;
+    }
+
     private static FieldInfo fallDamageTime = null;
     public static FieldInfo GetFallDamageTime()
     {
