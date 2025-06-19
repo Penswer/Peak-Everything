@@ -1,6 +1,9 @@
 # Peak-Everything
 Simple mod menu that does a bit of this and a bit of that.
 
+## Notes
+If you downloaded this mod early on you may want to remove the ImGui folder from your plugins and replace it with the [DearImGuiInjection](https://thunderstore.io/c/peak/p/penswer/DearImGuiInjection/) package. They are the same but if you have both installed conflicts may arise.
+
 ## Features
 Flying(Buggy) \
 No Fall Damage \
@@ -18,8 +21,9 @@ Warp Player to You
 Download BepInEx from [this link](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.3) \
 Extract the contents into the PEAK game directory accessed through Steam>>Peak>>Manage>>Browse Local Files \
 Run the game once \
-Download and extract this package \
-Place Everything.dll and the ImGui folder into your plugins directory located in BepInEx>>Plugins inside your PEAK directory \
+Make sure you have DearImGuiInjection also installed from [here](https://thunderstore.io/c/peak/p/penswer/DearImGuiInjection/) \
+Download and extract **this** package \
+Place Everything.dll into your plugins directory located in BepInEx>>Plugins inside your PEAK directory \
 Start the game in DX12 mode (not vulkan) \
 ??? \
 Profit
