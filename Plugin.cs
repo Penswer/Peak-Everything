@@ -26,6 +26,9 @@ public class Plugin : BaseUnityPlugin
     internal static int itemsSelected = -1;
     internal static int playerSelected = -1;
     internal static byte inventorySlotNum = 0;
+
+    internal static bool openedPlayerSelect = false;
+
     internal static byte[] inventorySearchBuffer = new byte[1000];
 
     private void Awake()
@@ -388,35 +391,59 @@ public class Plugin : BaseUnityPlugin
             {
                 ImGui.SetTooltip("Lets you play the game if you get an Out of Date screen.");
             }
-            if (ImGui.Button("Refresh Player List"))
-            {
-                UnityMainThreadDispatcher.Enqueue(() =>
-                {
-                    try
-                    {
-                        players.Clear();
-                        playerNames.Clear();
-                        playerSelected = -1;
-                        foreach (var character in Character.AllCharacters)
-                        {
-                            players.Add(character);
-                            playerNames.Add(character.characterName);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.LogError(ex);
-                        Logger.LogError(ex.Message);
-                        Logger.LogError(ex.StackTrace);
-                    }
-                });
-            }
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.SetTooltip("Refreshes Player List.....");
-            }
+            // if (ImGui.Button("Refresh Player List"))
+            // {
+            //     UnityMainThreadDispatcher.Enqueue(() =>
+            //     {
+            //         try
+            //         {
+            //             players.Clear();
+            //             playerNames.Clear();
+            //             playerSelected = -1;
+            //             foreach (var character in Character.AllCharacters)
+            //             {
+            //                 players.Add(character);
+            //                 playerNames.Add(character.characterName);
+            //             }
+            //         }
+            //         catch (Exception ex)
+            //         {
+            //             Logger.LogError(ex);
+            //             Logger.LogError(ex.Message);
+            //             Logger.LogError(ex.StackTrace);
+            //         }
+            //     });
+            // }
+            // if (ImGui.IsItemHovered())
+            // {
+            //     ImGui.SetTooltip("Refreshes Player List.....");
+            // }
             if (ImGui.BeginCombo("Player Select", playerSelected == -1 ? "None" : playerNames[playerSelected]))
             {
+                if (!openedPlayerSelect)
+                {
+                    openedPlayerSelect = true;
+                    UnityMainThreadDispatcher.Enqueue(() =>
+                    {
+                        try
+                        {
+                            players.Clear();
+                            playerNames.Clear();
+                            playerSelected = -1;
+                            foreach (var character in Character.AllCharacters)
+                            {
+                                players.Add(character);
+                                playerNames.Add(character.characterName);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogError(ex);
+                            Logger.LogError(ex.Message);
+                            Logger.LogError(ex.StackTrace);
+                        }
+                    });
+                }
                 for (int i = 0; i < playerNames.Count; i++)
                 {
                     int index = i;
@@ -430,6 +457,10 @@ public class Plugin : BaseUnityPlugin
                     }
                 }
                 ImGui.EndCombo();
+            }
+            else
+            {
+                openedPlayerSelect = false;
             }
             if (ImGui.Button("Revive"))
             {
