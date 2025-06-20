@@ -90,7 +90,7 @@ public class Plugin : BaseUnityPlugin
                     var move = GameHelpers.GetMovementComponent();
                     if (move != null)
                     {
-                        // ragdoll.ToggleCollision(!ConfigValues.fly.value);
+                        GameHelpers.GetRagdollComponent()?.ToggleCollision(!ConfigValues.fly.value);
                         // ragdoll.ToggleKinematic(ConfigValues.fly.value);
                         if (!ConfigValues.fly.value)
                         {
