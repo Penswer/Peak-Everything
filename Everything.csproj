@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net4.7.1</TargetFramework>
     <AssemblyName>Everything</AssemblyName>
-    <Product>Does a few things</Product>
-    <Version>1.0.0</Version>
+    <Product>Everything</Product>
+    <Version>1.0.2</Version>
     <!--AllowUnsafeBlocks>true</AllowUnsafeBlocks-->
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
