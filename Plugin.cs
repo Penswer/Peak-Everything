@@ -103,6 +103,7 @@ public class Plugin : BaseUnityPlugin
                         else
                         {
                             ConfigValues.noFallDamage.value = true;
+                            ConfigValues.noFallDamage.constantUpdating = true;
                         }
                     }
                 });

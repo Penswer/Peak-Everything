@@ -4,6 +4,8 @@ Simple mod menu that does a bit of this and a bit of that.
 ## Notes
 If you downloaded this mod early on you may want to remove the ImGui folder from your plugins and replace it with the [DearImGuiInjection](https://thunderstore.io/c/peak/p/penswer/DearImGuiInjection/) package. They are the same but if you have both installed conflicts may arise.
 
+If the mod is not launching and you are sure you followed all other directions you may want to try adding -DX12 to your PEAK launch parameters on steam
+
 ## Features
 Flying(Buggy) \
 No Fall Damage \

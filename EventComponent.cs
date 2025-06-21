@@ -15,7 +15,7 @@ public class EventComponent : MonoBehaviour
             {
                 GameHelpers.GetMovementComponent().jumpGravity = ConfigValues.jump.value;
             }
-            if (ConfigValues.noFallDamage.constantUpdating && ConstantFields.GetFallDamageTime() != null)
+            if (ConfigValues.noFallDamage.constantUpdating && ConfigValues.noFallDamage.value && ConstantFields.GetFallDamageTime() != null)
             {
                 CharacterMovement move = GameHelpers.GetMovementComponent();
                 ConstantFields.GetFallDamageTime().SetValueDirect(__makeref(move), ConfigValues.noFallDamage.value ? 999.0f : 1.5f);
@@ -23,11 +23,11 @@ public class EventComponent : MonoBehaviour
         }
         if (GameHelpers.GetCharacterComponent())
         {
-            if (ConfigValues.infiniteStamina.constantUpdating && ConstantFields.GetInfiniteStaminaField() != null)
+            if (ConfigValues.infiniteStamina.constantUpdating && ConfigValues.infiniteStamina.value && ConstantFields.GetInfiniteStaminaField() != null)
             {
                 ConstantFields.GetInfiniteStaminaField().SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.infiniteStamina.value);
             }
-            if (ConfigValues.statusLock.constantUpdating && ConstantFields.GetStatusLockField() != null)
+            if (ConfigValues.statusLock.constantUpdating && ConfigValues.statusLock.value && ConstantFields.GetStatusLockField() != null)
             {
                 ConstantFields.GetStatusLockField().SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.statusLock.value);
             }
