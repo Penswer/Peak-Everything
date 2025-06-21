@@ -42,7 +42,8 @@ public class EventComponent : MonoBehaviour
                 if (ragdoll.partDict.ContainsKey(BodypartType.Hip))
                 {
                     // Plugin.Logger.LogError("HERE2");
-                    var hip = ragdoll.partDict[BodypartType.Hip].gameObject.transform;
+                    // var hip = ragdoll.partDict[BodypartType.Hip].gameObject.transform;
+                    
                     var camForward = Camera.main.gameObject.transform.forward;
                     var camRight = Camera.main.gameObject.transform.right;
                     // camForward.y = 0.0f;
@@ -51,22 +52,27 @@ public class EventComponent : MonoBehaviour
                     // camRight.Normalize();
                     var time = Time.deltaTime;
                     var speed = ConfigValues.flySpeed.value;
+                    ragdoll.HaltBodyVelocity();
                     if (Input.GetKey(KeyCode.W))
                     {
                         // Plugin.Logger.LogError("FOWARD");
-                        hip.position += camForward * time * speed;
+                        // hip.position += camForward * time * speed;
+                        ragdoll.MoveAllRigsInDirection(camForward * time * speed);
                     }
                     if (Input.GetKey(KeyCode.S))
                     {
-                        hip.position -= camForward * time * speed;
+                        // hip.position -= camForward * time * speed;
+                        ragdoll.MoveAllRigsInDirection(-camForward * time * speed);
                     }
                     if (Input.GetKey(KeyCode.A))
                     {
-                        hip.position -= camRight * time * speed;
+                        // hip.position -= camRight * time * speed;
+                        ragdoll.MoveAllRigsInDirection(-camRight * time * speed);
                     }
                     if (Input.GetKey(KeyCode.D))
                     {
-                        hip.position += camRight * time * speed;
+                        // hip.position += camRight * time * speed;
+                        ragdoll.MoveAllRigsInDirection(camRight * time * speed);
                     }
                 }
             }

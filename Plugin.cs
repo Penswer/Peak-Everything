@@ -36,6 +36,10 @@ public class Plugin : BaseUnityPlugin
         // Plugin startup logic
         Logger = base.Logger;
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
+        foreach (var option in Environment.GetCommandLineArgs())
+        {
+            Logger.LogInfo($"Launch Options {option}.!");
+        }
         Component = this.gameObject.AddComponent<EventComponent>();
         DearImGuiInjection.DearImGuiInjection.Render += MyUI;
         // DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags |= ImGuiConfigFlags.ViewportsEnable;
@@ -95,6 +99,10 @@ public class Plugin : BaseUnityPlugin
                         if (!ConfigValues.fly.value)
                         {
                             move.maxGravity = -500;
+                        }
+                        else
+                        {
+                            ConfigValues.noFallDamage.value = true;
                         }
                     }
                 });
