@@ -1,10 +1,16 @@
 using UnityEngine;
 using System;
+using Everything;
 
 public class EventComponent : MonoBehaviour
 {
     void Update()
     {
+        if (Input.GetKeyDown(Plugin.configKeyBind.Value))
+        {
+            Plugin.showMenu ^= true;
+        }
+
         if (GameHelpers.GetMovementComponent())
         {
             if (ConfigValues.speed.constantUpdating)

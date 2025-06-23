@@ -20,7 +20,7 @@ Warp to Player \
 Warp Player to You
 
 ## Installation
-Download BepInEx from [this link](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.3) \
+Download BepInEx \
 Extract the contents into the PEAK game directory accessed through Steam>>Peak>>Manage>>Browse Local Files \
 Run the game once \
 Make sure you have DearImGuiInjection also installed from [here](https://thunderstore.io/c/peak/p/penswer/DearImGuiInjection/) \
