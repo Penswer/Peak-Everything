@@ -99,6 +99,7 @@ public class EventComponent : MonoBehaviour
 
     void OnGUI()
     {
+        Plugin.MyUI();
     }
 
     void LateUpdate()

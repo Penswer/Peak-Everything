@@ -1,4 +1,4 @@
-using ImGuiNET;
+// using ImGuiNET;
 
 internal class ConfigValue<T>
 {
@@ -23,5 +23,5 @@ internal class ConfigValues
     public static ConfigValue<bool> noFallDamage = new ConfigValue<bool>(false);
     public static ConfigValue<bool> infiniteStamina = new ConfigValue<bool>(false);
     public static ConfigValue<bool> statusLock = new ConfigValue<bool>(false);
-    public static ImGuiWindowFlags everythingWindowFlags = ImGuiWindowFlags.None;
+    // public static ImGuiWindowFlags everythingWindowFlags = ImGuiWindowFlags.None;
 }
