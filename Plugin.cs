@@ -48,7 +48,7 @@ public class Plugin : BaseUnityPlugin
             Logger.LogInfo($"Launch Options {option}.!");
         }
         Component = this.gameObject.AddComponent<EventComponent>();
-        DearImGuiInjection.DearImGuiInjection.Render += MyUI;
+        // DearImGuiInjection.DearImGuiInjection.Render += MyUI;
         // DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags |= ImGuiConfigFlags.ViewportsEnable;
         // DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
         // DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
