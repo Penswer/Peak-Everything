@@ -1,9 +1,10 @@
 {
     "name": "Everything",
-    "version_number": "1.1.1",
+    "version_number": "1.1.2",
     "website_url": "https://github.com/Penswer/Peak-Everything",
-    "description": "Simple mod menu that does a bit of this and a bit of that.",
+    "description": "Simple mod menu that does a bit of this and a bit of that. [DO NOT USE WITH GALE]",
     "dependencies": [
-        "BepInEx-BepInExPack-5.4.2100"
+        "BepInEx-BepInExPack_PEAK-5.4.2403",
+        "penswer-DearImGuiInjection-1.0.0"
     ]
 }

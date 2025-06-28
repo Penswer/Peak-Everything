@@ -1,16 +1,16 @@
-﻿using BepInEx;
-using UnityEngine;
-using BepInEx.Logging;
-using System;
-using DearImGuiInjection.BepInEx;
-using ImGuiNET;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Photon.Pun;
-using Zorro.Core.Serizalization;
-using pworld.Scripts;
-using HarmonyLib;
+using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
+using DearImGuiInjection.BepInEx;
+using HarmonyLib;
+using ImGuiNET;
+using Photon.Pun;
+using pworld.Scripts;
+using UnityEngine;
+using Zorro.Core.Serizalization;
 
 namespace Everything;
 
@@ -40,7 +40,12 @@ public class Plugin : BaseUnityPlugin
     private void Awake()
     {
         // Plugin startup logic
-        configKeyBind = Config.Bind("Keybinds", "ToggleKey", KeyCode.Home, "The key used to toggle the GUI on and off");
+        configKeyBind = Config.Bind(
+            "Keybinds",
+            "ToggleKey",
+            KeyCode.Home,
+            "The key used to toggle the GUI on and off"
+        );
         Logger = base.Logger;
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         foreach (var option in Environment.GetCommandLineArgs())
@@ -52,7 +57,7 @@ public class Plugin : BaseUnityPlugin
         // DearImGuiInjection.DearImGuiInjection.IO.ConfigFlags |= ImGuiConfigFlags.ViewportsEnable;
         // DearImGuiInjection.DearImGuiInjection.AllowPassthroughInput = true;
         // DearImGuiInjection.DearImGuiInjection.ToggleCursorActions(true);
-        Harmony.CreateAndPatchAll(typeof(SteamAPIPatches));
+        // Harmony.CreateAndPatchAll(typeof(SteamAPIPatches));
     }
 
     private static void MyUI()
@@ -95,7 +100,6 @@ public class Plugin : BaseUnityPlugin
                     ImGui.SetTooltip("Locks the mod menu position.");
                 }
 
-
                 if (ImGui.Checkbox("Fly", ref ConfigValues.fly.value))
                 {
                     UnityMainThreadDispatcher.Enqueue(() =>
@@ -103,7 +107,9 @@ public class Plugin : BaseUnityPlugin
                         var move = GameHelpers.GetMovementComponent();
                         if (move != null)
                         {
-                            GameHelpers.GetRagdollComponent()?.ToggleCollision(!ConfigValues.fly.value);
+                            GameHelpers
+                                .GetRagdollComponent()
+                                ?.ToggleCollision(!ConfigValues.fly.value);
                             // ragdoll.ToggleKinematic(ConfigValues.fly.value);
                             if (!ConfigValues.fly.value)
                             {
@@ -119,12 +125,13 @@ public class Plugin : BaseUnityPlugin
                 }
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("Lets you fly. Kinda buggy since I suck. Also isn't synced very well with other players.");
+                    ImGui.SetTooltip(
+                        "Lets you fly. Kinda buggy since I suck. Also isn't synced very well with other players."
+                    );
                 }
 
                 if (ImGui.SliderFloat("Fly Speed", ref ConfigValues.flySpeed.value, 10.0f, 200.0f))
-                {
-                }
+                { }
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.SetTooltip("Fly Speed...duh");
@@ -145,7 +152,12 @@ public class Plugin : BaseUnityPlugin
                             try
                             {
                                 CharacterMovement move = GameHelpers.GetMovementComponent();
-                                ConstantFields.GetFallDamageTime().SetValueDirect(__makeref(move), ConfigValues.noFallDamage.value ? 999.0f : 1.5f);
+                                ConstantFields
+                                    .GetFallDamageTime()
+                                    .SetValueDirect(
+                                        __makeref(move),
+                                        ConfigValues.noFallDamage.value ? 999.0f : 1.5f
+                                    );
                             }
                             catch (Exception ex)
                             {
@@ -170,7 +182,12 @@ public class Plugin : BaseUnityPlugin
                     {
                         if (GameHelpers.GetCharacterComponent())
                         {
-                            ConstantFields.GetStatusLockField()?.SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.statusLock.value);
+                            ConstantFields
+                                .GetStatusLockField()
+                                ?.SetValue(
+                                    GameHelpers.GetCharacterComponent(),
+                                    ConfigValues.statusLock.value
+                                );
                         }
                     });
                 }
@@ -199,7 +216,12 @@ public class Plugin : BaseUnityPlugin
                         }
                         if (GameHelpers.GetCharacterComponent())
                         {
-                            ConstantFields.GetInfiniteStaminaField()?.SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.infiniteStamina.value);
+                            ConstantFields
+                                .GetInfiniteStaminaField()
+                                ?.SetValue(
+                                    GameHelpers.GetCharacterComponent(),
+                                    ConfigValues.infiniteStamina.value
+                                );
                         }
                     });
                 }
@@ -219,7 +241,9 @@ public class Plugin : BaseUnityPlugin
                     {
                         if (GameHelpers.GetMovementComponent())
                         {
-                            GameHelpers.GetMovementComponent().movementModifier = ConfigValues.speed.value;
+                            GameHelpers.GetMovementComponent().movementModifier = ConfigValues
+                                .speed
+                                .value;
                         }
                     });
                 }
@@ -239,7 +263,9 @@ public class Plugin : BaseUnityPlugin
                     {
                         if (GameHelpers.GetMovementComponent())
                         {
-                            GameHelpers.GetMovementComponent().jumpGravity = ConfigValues.jump.value;
+                            GameHelpers.GetMovementComponent().jumpGravity = ConfigValues
+                                .jump
+                                .value;
                         }
                     });
                 }
@@ -250,7 +276,14 @@ public class Plugin : BaseUnityPlugin
 
                 if (ImGui.Button("Tele To 0,0,0"))
                 {
-                    UnityMainThreadDispatcher.Enqueue(() => { Character.localCharacter?.photonView?.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { new Vector3(0.0f, 0.0f, 0.0f), true }); });
+                    UnityMainThreadDispatcher.Enqueue(() =>
+                    {
+                        Character.localCharacter?.photonView?.RPC(
+                            "WarpPlayerRPC",
+                            RpcTarget.All,
+                            new object[] { new Vector3(0.0f, 0.0f, 0.0f), true }
+                        );
+                    });
                 }
 
                 if (ImGui.Button("Refresh Inventory Items"))
@@ -266,7 +299,11 @@ public class Plugin : BaseUnityPlugin
                             for (int i = 0; i < locItems.Length; i++)
                             {
                                 // Logger.LogError($"AAA FOIUND ITEM: {locItems[i].GetName()} || Scene: {locItems[i].gameObject.scene.name}");
-                                if (locItems[i] != null && locItems[i].gameObject.scene.handle == 0 && string.IsNullOrEmpty(locItems[i].gameObject.scene.name))
+                                if (
+                                    locItems[i] != null
+                                    && locItems[i].gameObject.scene.handle == 0
+                                    && string.IsNullOrEmpty(locItems[i].gameObject.scene.name)
+                                )
                                 {
                                     items.Add(locItems[i]);
                                     itemNames.Add(locItems[i].GetName());
@@ -278,7 +315,6 @@ public class Plugin : BaseUnityPlugin
                             Logger.LogError(ex);
                             Logger.LogError(ex.Message);
                             Logger.LogError(ex.StackTrace);
-
                         }
                     });
                 }
@@ -301,10 +337,18 @@ public class Plugin : BaseUnityPlugin
                 {
                     inventorySlotNum = 2;
                 }
-                if (ImGui.BeginCombo("Items##InventorySelect", itemsSelected == -1 ? "None" : itemNames[itemsSelected]))
+                if (
+                    ImGui.BeginCombo(
+                        "Items##InventorySelect",
+                        itemsSelected == -1 ? "None" : itemNames[itemsSelected]
+                    )
+                )
                 {
-
-                    ImGui.InputText("##InventorySearch", inventorySearchBuffer, (uint)inventorySearchBuffer.Length);
+                    ImGui.InputText(
+                        "##InventorySearch",
+                        inventorySearchBuffer,
+                        (uint)inventorySearchBuffer.Length
+                    );
                     // if (ImGui.Selectable($"None##-1Item1InvEditor", itemsSelected == -1))
                     // {
                     //     itemsSelected = -1;
@@ -314,20 +358,53 @@ public class Plugin : BaseUnityPlugin
                     {
                         // Logger.LogError("HERE");
                         int index = i;
-                        if (itemNames[i].ToLower().Contains(Encoding.UTF8.GetString(inventorySearchBuffer).Split('\0')[0].ToLower()))
+                        if (
+                            itemNames[i]
+                                .ToLower()
+                                .Contains(
+                                    Encoding
+                                        .UTF8.GetString(inventorySearchBuffer)
+                                        .Split('\0')[0]
+                                        .ToLower()
+                                )
+                        )
                         {
-                            if (ImGui.Selectable($"{itemNames[i]}##{index}Item1InvEditor", itemsSelected == index))
+                            if (
+                                ImGui.Selectable(
+                                    $"{itemNames[i]}##{index}Item1InvEditor",
+                                    itemsSelected == index
+                                )
+                            )
                             {
                                 itemsSelected = i;
                                 UnityMainThreadDispatcher.Enqueue(() =>
                                 {
-                                    if (Player.localPlayer != null && Player.localPlayer.itemSlots != null && Player.localPlayer.itemSlots.Length >= 3)
+                                    if (
+                                        Player.localPlayer != null
+                                        && Player.localPlayer.itemSlots != null
+                                        && Player.localPlayer.itemSlots.Length >= 3
+                                    )
                                     {
-                                        Player.localPlayer.itemSlots[inventorySlotNum].prefab = items[itemsSelected];
-                                        Player.localPlayer.itemSlots[inventorySlotNum].data = new ItemInstanceData(Guid.NewGuid());
-                                        ItemInstanceDataHandler.AddInstanceData(Player.localPlayer.itemSlots[inventorySlotNum].data);
-                                        byte[] array = IBinarySerializable.ToManagedArray<InventorySyncData>(new InventorySyncData(Player.localPlayer.itemSlots, Player.localPlayer.backpackSlot, Player.localPlayer.tempFullSlot));
-                                        Player.localPlayer.photonView.RPC("SyncInventoryRPC", RpcTarget.Others, new object[] { array, true });
+                                        Player.localPlayer.itemSlots[inventorySlotNum].prefab =
+                                            items[itemsSelected];
+                                        Player.localPlayer.itemSlots[inventorySlotNum].data =
+                                            new ItemInstanceData(Guid.NewGuid());
+                                        ItemInstanceDataHandler.AddInstanceData(
+                                            Player.localPlayer.itemSlots[inventorySlotNum].data
+                                        );
+                                        byte[] array =
+                                            IBinarySerializable.ToManagedArray<InventorySyncData>(
+                                                new InventorySyncData(
+                                                    Player.localPlayer.itemSlots,
+                                                    Player.localPlayer.backpackSlot,
+                                                    Player.localPlayer.tempFullSlot
+                                                )
+                                            );
+                                        Player.localPlayer.photonView.RPC(
+                                            "SyncInventoryRPC",
+                                            RpcTarget.Others,
+                                            new object[] { array, true }
+                                        );
                                     }
                                 });
                             }
@@ -341,7 +418,9 @@ public class Plugin : BaseUnityPlugin
                 }
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("Clicking on an item will place it in the selected inventory slot.");
+                    ImGui.SetTooltip(
+                        "Clicking on an item will place it in the selected inventory slot."
+                    );
                 }
 
                 if (ImGui.Button("Give Items 999 Recharge"))
@@ -396,7 +475,9 @@ public class Plugin : BaseUnityPlugin
                 }
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("Tries to set the recharge/ammo/filled amount of inventory items to 999");
+                    ImGui.SetTooltip(
+                        "Tries to set the recharge/ammo/filled amount of inventory items to 999"
+                    );
                 }
                 if (ImGui.Button("Bypass OutOfDate"))
                 {
@@ -437,7 +518,12 @@ public class Plugin : BaseUnityPlugin
                 // {
                 //     ImGui.SetTooltip("Refreshes Player List.....");
                 // }
-                if (ImGui.BeginCombo("Player Select", playerSelected == -1 ? "None" : playerNames[playerSelected]))
+                if (
+                    ImGui.BeginCombo(
+                        "Player Select",
+                        playerSelected == -1 ? "None" : playerNames[playerSelected]
+                    )
+                )
                 {
                     if (!openedPlayerSelect)
                     {
@@ -466,7 +552,12 @@ public class Plugin : BaseUnityPlugin
                     for (int i = 0; i < playerNames.Count; i++)
                     {
                         int index = i;
-                        if (ImGui.Selectable($"{playerNames[i]}##{i}PlayerSelector", index == playerSelected))
+                        if (
+                            ImGui.Selectable(
+                                $"{playerNames[i]}##{i}PlayerSelector",
+                                index == playerSelected
+                            )
+                        )
                         {
                             playerSelected = index;
                         }
@@ -487,19 +578,32 @@ public class Plugin : BaseUnityPlugin
                     {
                         try
                         {
-                            if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                            if (
+                                playerSelected >= 0
+                                && playerSelected < players.Count
+                                && players[playerSelected] != null
+                            )
                             {
                                 // players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), false });
                                 Vector3 pos;
                                 if (players[playerSelected].Ghost != null)
                                 {
-                                    pos = players[playerSelected].Ghost.gameObject.transform.position;
+                                    pos = players[playerSelected]
+                                        .Ghost
+                                        .gameObject
+                                        .transform
+                                        .position;
                                 }
                                 else
                                 {
                                     pos = players[playerSelected].Head;
                                 }
-                                players[playerSelected].photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, new object[] { pos + new Vector3(0.0f, 4.0f, 0.0f), false });
+                                players[playerSelected]
+                                    .photonView.RPC(
+                                        "RPCA_ReviveAtPosition",
+                                        RpcTarget.All,
+                                        new object[] { pos + new Vector3(0.0f, 4.0f, 0.0f), false }
+                                    );
                             }
                         }
                         catch (Exception ex)
@@ -521,9 +625,22 @@ public class Plugin : BaseUnityPlugin
                     {
                         try
                         {
-                            if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                            if (
+                                playerSelected >= 0
+                                && playerSelected < players.Count
+                                && players[playerSelected] != null
+                            )
                             {
-                                Character.localCharacter.photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { players[playerSelected].Head + new Vector3(0.0f, 4.0f, 0.0f), true });
+                                Character.localCharacter.photonView.RPC(
+                                    "WarpPlayerRPC",
+                                    RpcTarget.All,
+                                    new object[]
+                                    {
+                                        players[playerSelected].Head
+                                            + new Vector3(0.0f, 4.0f, 0.0f),
+                                        true,
+                                    }
+                                );
                             }
                         }
                         catch (Exception ex)
@@ -545,9 +662,23 @@ public class Plugin : BaseUnityPlugin
                     {
                         try
                         {
-                            if (playerSelected >= 0 && playerSelected < players.Count && players[playerSelected] != null)
+                            if (
+                                playerSelected >= 0
+                                && playerSelected < players.Count
+                                && players[playerSelected] != null
+                            )
                             {
-                                players[playerSelected].photonView.RPC("WarpPlayerRPC", RpcTarget.All, new object[] { Character.localCharacter.Head + new Vector3(0.0f, 4.0f, 0.0f), true });
+                                players[playerSelected]
+                                    .photonView.RPC(
+                                        "WarpPlayerRPC",
+                                        RpcTarget.All,
+                                        new object[]
+                                        {
+                                            Character.localCharacter.Head
+                                                + new Vector3(0.0f, 4.0f, 0.0f),
+                                            true,
+                                        }
+                                    );
                             }
                         }
                         catch (Exception ex)
@@ -561,11 +692,9 @@ public class Plugin : BaseUnityPlugin
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.SetTooltip("Warps selected player to you");
-
                 }
                 ImGui.End();
             }
         }
-
     }
 }

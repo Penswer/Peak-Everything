@@ -24,6 +24,8 @@ bld/
 [Ll]ogs/
 
 build.sh
+.vscode/
+.config/
 
 # .NET Core
 project.lock.json

@@ -8,9 +8,11 @@ internal class GameHelpers
         {
             return localMovement;
         }
-        if (Character.localCharacter == null
-        || Character.localCharacter.gameObject == null
-        || Character.localCharacter.gameObject.GetComponent<CharacterMovement>() == null)
+        if (
+            Character.localCharacter == null
+            || Character.localCharacter.gameObject == null
+            || Character.localCharacter.gameObject.GetComponent<CharacterMovement>() == null
+        )
         {
             return null;
         }
@@ -42,7 +44,10 @@ internal class GameHelpers
         {
             return localCharRagdoll;
         }
-        if (Character.localCharacter == null || Character.localCharacter.gameObject.GetComponent<CharacterRagdoll>() == null)
+        if (
+            Character.localCharacter == null
+            || Character.localCharacter.gameObject.GetComponent<CharacterRagdoll>() == null
+        )
         {
             return null;
         }

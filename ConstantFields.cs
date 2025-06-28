@@ -3,8 +3,8 @@ using Everything;
 
 internal class ConstantFields
 {
-
     private static PropertyInfo infiniteStamina = null;
+
     public static PropertyInfo GetInfiniteStaminaField()
     {
         if (infiniteStamina == null)
@@ -24,6 +24,7 @@ internal class ConstantFields
     }
 
     private static PropertyInfo statusLock = null;
+
     public static PropertyInfo GetStatusLockField()
     {
         if (statusLock == null)
@@ -43,11 +44,14 @@ internal class ConstantFields
     }
 
     private static FieldInfo fallDamageTime = null;
+
     public static FieldInfo GetFallDamageTime()
     {
         if (fallDamageTime == null)
         {
-            var fields = typeof(CharacterMovement).GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            var fields = typeof(CharacterMovement).GetFields(
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
             foreach (var field in fields)
             {
                 Plugin.Logger.LogError(field.Name);
@@ -61,5 +65,4 @@ internal class ConstantFields
         }
         return fallDamageTime;
     }
-
 }

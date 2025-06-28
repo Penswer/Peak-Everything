@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net4.7.1</TargetFramework>
     <AssemblyName>Everything</AssemblyName>
@@ -14,23 +13,37 @@
     </RestoreAdditionalProjectSources>
     <RootNamespace>Everything</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
     <PackageReference Include="UnityEngine.Modules" Version="6000.0.36" IncludeAssets="compile" />
+    <PackageReference
+      Include="BepInEx.AssemblyPublicizer.MSBuild"
+      Version="0.4.2"
+      PrivateAssets="all"
+    />
   </ItemGroup>
-  
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+    <PackageReference
+      Include="Microsoft.NETFramework.ReferenceAssemblies"
+      Version="1.0.2"
+      PrivateAssets="all"
+    />
   </ItemGroup>
   <PropertyGroup>
     <HomeDir>$(HOME)</HomeDir>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/PEAK_Data/Managed/*.dll"></Reference>
-    <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/DearImGuiInjection/DearImGuiInjection.dll"></Reference>
-    <Reference Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/DearImGuiInjection/ImGui.NET.dll"></Reference>
-</ItemGroup>
+    <Reference
+      Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/PEAK_Data/Managed/*.dll"
+      Publicize="true"
+    ></Reference>
+    <Reference
+      Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/DearImGuiInjection/DearImGuiInjection.dll"
+    ></Reference>
+    <Reference
+      Include="$(HomeDir)/.local/share/Steam/steamapps/common/PEAK/BepInEx/plugins/DearImGuiInjection/ImGui.NET.dll"
+    ></Reference>
+  </ItemGroup>
 </Project>

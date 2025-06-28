@@ -1,6 +1,6 @@
-using UnityEngine;
 using System;
 using Everything;
+using UnityEngine;
 
 public class EventComponent : MonoBehaviour
 {
@@ -21,23 +21,51 @@ public class EventComponent : MonoBehaviour
             {
                 GameHelpers.GetMovementComponent().jumpGravity = ConfigValues.jump.value;
             }
-            if (ConfigValues.noFallDamage.constantUpdating && ConfigValues.noFallDamage.value && ConstantFields.GetFallDamageTime() != null)
+            if (
+                ConfigValues.noFallDamage.constantUpdating
+                && ConfigValues.noFallDamage.value
+                && ConstantFields.GetFallDamageTime() != null
+            )
             {
                 CharacterMovement move = GameHelpers.GetMovementComponent();
-                ConstantFields.GetFallDamageTime().SetValueDirect(__makeref(move), ConfigValues.noFallDamage.value ? 999.0f : 1.5f);
+                ConstantFields
+                    .GetFallDamageTime()
+                    .SetValueDirect(
+                        __makeref(move),
+                        ConfigValues.noFallDamage.value ? 999.0f : 1.5f
+                    );
             }
         }
         if (GameHelpers.GetCharacterComponent())
         {
-            if (ConfigValues.infiniteStamina.constantUpdating && ConfigValues.infiniteStamina.value && ConstantFields.GetInfiniteStaminaField() != null)
+            if (
+                ConfigValues.infiniteStamina.constantUpdating
+                && ConfigValues.infiniteStamina.value
+                && ConstantFields.GetInfiniteStaminaField() != null
+            )
             {
-                ConstantFields.GetInfiniteStaminaField().SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.infiniteStamina.value);
+                ConstantFields
+                    .GetInfiniteStaminaField()
+                    .SetValue(
+                        GameHelpers.GetCharacterComponent(),
+                        ConfigValues.infiniteStamina.value
+                    );
             }
-            if (ConfigValues.statusLock.constantUpdating && ConfigValues.statusLock.value && ConstantFields.GetStatusLockField() != null)
+            if (
+                ConfigValues.statusLock.constantUpdating
+                && ConfigValues.statusLock.value
+                && ConstantFields.GetStatusLockField() != null
+            )
             {
-                ConstantFields.GetStatusLockField().SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.statusLock.value);
+                ConstantFields
+                    .GetStatusLockField()
+                    .SetValue(GameHelpers.GetCharacterComponent(), ConfigValues.statusLock.value);
             }
-            if (ConfigValues.fly.value && GameHelpers.GetRagdollComponent() && GameHelpers.GetMovementComponent())
+            if (
+                ConfigValues.fly.value
+                && GameHelpers.GetRagdollComponent()
+                && GameHelpers.GetMovementComponent()
+            )
             {
                 // Plugin.Logger.LogError("HERE1");
                 var move = GameHelpers.GetMovementComponent();
@@ -49,7 +77,7 @@ public class EventComponent : MonoBehaviour
                 {
                     // Plugin.Logger.LogError("HERE2");
                     // var hip = ragdoll.partDict[BodypartType.Hip].gameObject.transform;
-                    
+
                     var camForward = Camera.main.gameObject.transform.forward;
                     var camRight = Camera.main.gameObject.transform.right;
                     // camForward.y = 0.0f;
@@ -90,27 +118,19 @@ public class EventComponent : MonoBehaviour
             //     }
             //     if (Input.GetMouseButtonDown(0))
             //     {
-                    
+
             //     }
             // }
         }
-
     }
 
-    void OnGUI()
-    {
-    }
+    void OnGUI() { }
 
-    void LateUpdate()
-    {
-    }
+    void LateUpdate() { }
 
     void Start()
     {
-        Action act = () =>
-        {
-        };
+        Action act = () => { };
         // this.StartCoroutine(ButtonAPI.WaitForQMClone(act).WrapToIl2Cpp());
     }
-
 }

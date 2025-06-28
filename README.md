@@ -6,6 +6,12 @@ If you downloaded this mod early on you may want to remove the ImGui folder from
 
 If the mod is not launching and you are sure you followed all other directions you may want to try adding -DX12 to your PEAK launch parameters on steam
 
+## DO NOT USE WITH GALE
+Due to a certain limitation with steam there doesn't seem to be a way to make PEAK use DX12 when launching through Gale.
+If someone knows how to do this message "Penswer" on discord.
+If you want to use this mod you will have to do a manual BepInEx install or move your Gale BepInEx profile into the game's files and launch through steam.
+Please do not bother anyone who works on Gale about this. It is not their fault. 
+
 ## Features
 Flying(Buggy) \
 No Fall Damage \
