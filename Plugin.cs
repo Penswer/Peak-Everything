@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using BepInEx;
@@ -28,6 +29,8 @@ public class Plugin : BaseUnityPlugin
     internal static int itemsSelected = -1;
     internal static int playerSelected = -1;
     internal static byte inventorySlotNum = 0;
+
+    internal static CorRunner noHungerRunner = new CorRunner(RemoveHungerLoop);
 
     internal static bool openedPlayerSelect = false;
 
@@ -272,6 +275,19 @@ public class Plugin : BaseUnityPlugin
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.SetTooltip("Jump Multiplier.");
+                }
+
+                if (
+                    ImGui.Checkbox(
+                        "Remove Everyone's Hunger Loop",
+                        ref ConfigValues.removeHunger.value
+                    )
+                )
+                {
+                    UnityMainThreadDispatcher.Enqueue(() =>
+                    {
+                        noHungerRunner.Toggle(ConfigValues.removeHunger.value);
+                    });
                 }
 
                 if (ImGui.Button("Tele To 0,0,0"))
@@ -695,6 +711,48 @@ public class Plugin : BaseUnityPlugin
                 }
                 ImGui.End();
             }
+        }
+    }
+
+    private static IEnumerator RemoveHungerLoop()
+    {
+        while (ConfigValues.removeHunger.value)
+        {
+            foreach (Character character in Character.AllCharacters)
+            {
+                try
+                {
+                    if (character.refs.afflictions.currentStatuses[1] == 0.0f)
+                    {
+                        continue;
+                    }
+                    character.refs.afflictions.currentStatuses[1] = 0.0f;
+                    byte[] array = IBinarySerializable.ToManagedArray<StatusSyncData>(
+                        new StatusSyncData
+                        {
+                            statusList = new List<float>(
+                                character.refs.afflictions.currentStatuses
+                            ),
+                        }
+                    );
+                    float[] array2 = IBinarySerializable
+                        .GetFromManagedArray<StatusSyncData>(array)
+                        .statusList.ToArray();
+                    character.photonView.RPC(
+                        "ApplyStatusesFromFloatArrayRPC",
+                        RpcTarget.All,
+                        new object[] { array2 }
+                    );
+                    Logger.LogInfo($"Tick: Applied no hunger to {character.characterName}");
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex);
+                    Logger.LogError(ex.StackTrace);
+                }
+                yield return new WaitForSeconds(1.0f);
+            }
+            yield return new WaitForEndOfFrame();
         }
     }
 }
