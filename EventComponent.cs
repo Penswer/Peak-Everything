@@ -1,6 +1,7 @@
 using System;
 using Everything;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EventComponent : MonoBehaviour
 {
@@ -86,6 +87,7 @@ public class EventComponent : MonoBehaviour
                     // camRight.Normalize();
                     var time = Time.deltaTime;
                     var speed = ConfigValues.flySpeed.value;
+                    var thresholdController = Plugin.controllerThreshold.Value;
                     ragdoll.HaltBodyVelocity();
                     if (Input.GetKey(KeyCode.W))
                     {
@@ -93,20 +95,59 @@ public class EventComponent : MonoBehaviour
                         // hip.position += camForward * time * speed;
                         ragdoll.MoveAllRigsInDirection(camForward * time * speed);
                     }
+                    else if (
+                        Gamepad.current != null
+                        && Gamepad.current.leftStick.ReadValue().y >= thresholdController
+                    )
+                    {
+                        ragdoll.MoveAllRigsInDirection(
+                            camForward * time * (speed * Gamepad.current.leftStick.ReadValue().y)
+                        );
+                    }
+
                     if (Input.GetKey(KeyCode.S))
                     {
                         // hip.position -= camForward * time * speed;
                         ragdoll.MoveAllRigsInDirection(-camForward * time * speed);
                     }
+                    else if (
+                        Gamepad.current != null
+                        && Gamepad.current.leftStick.ReadValue().y <= -thresholdController
+                    )
+                    {
+                        ragdoll.MoveAllRigsInDirection(
+                            camForward * time * (speed * Gamepad.current.leftStick.ReadValue().y)
+                        );
+                    }
+
                     if (Input.GetKey(KeyCode.A))
                     {
                         // hip.position -= camRight * time * speed;
                         ragdoll.MoveAllRigsInDirection(-camRight * time * speed);
                     }
+                    else if (
+                        Gamepad.current != null
+                        && Gamepad.current.leftStick.ReadValue().x <= -thresholdController
+                    )
+                    {
+                        ragdoll.MoveAllRigsInDirection(
+                            camRight * time * (speed * Gamepad.current.leftStick.ReadValue().x)
+                        );
+                    }
+
                     if (Input.GetKey(KeyCode.D))
                     {
                         // hip.position += camRight * time * speed;
                         ragdoll.MoveAllRigsInDirection(camRight * time * speed);
+                    }
+                    else if (
+                        Gamepad.current != null
+                        && Gamepad.current.leftStick.ReadValue().x >= thresholdController
+                    )
+                    {
+                        ragdoll.MoveAllRigsInDirection(
+                            camRight * time * (speed * Gamepad.current.leftStick.ReadValue().x)
+                        );
                     }
                 }
             }

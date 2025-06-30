@@ -39,6 +39,7 @@ public class Plugin : BaseUnityPlugin
     internal static bool showMenu = true;
 
     public static ConfigEntry<KeyCode> configKeyBind;
+    public static ConfigEntry<float> controllerThreshold;
 
     private void Awake()
     {
@@ -48,6 +49,12 @@ public class Plugin : BaseUnityPlugin
             "ToggleKey",
             KeyCode.Home,
             "The key used to toggle the GUI on and off"
+        );
+        controllerThreshold = Config.Bind(
+            "Controller",
+            "Threshold",
+            .05f,
+            "How much a joystick must be pushed until it's value is read"
         );
         Logger = base.Logger;
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
